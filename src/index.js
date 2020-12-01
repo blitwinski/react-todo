@@ -4,9 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+let tasks = ['feed the cat', 'pump up the jam']
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App title='ToDo List' tasks={tasks} />
   </React.StrictMode>,
   document.getElementById('root')
 );
