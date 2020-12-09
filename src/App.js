@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { render } from '@testing-library/react';
+//import { render } from '@testing-library/react';
 
 class App extends Component {
   state = {
@@ -14,12 +14,17 @@ class App extends Component {
     console.log(e.target.value)
     this.setState({draft: e.target.value})
   }
-  
+ 
    AddTodo = () => {
     //tasks.push(this.state.draft)
     //tasks.push('aaa')
     //state.tasks.push(state.draft)
-    console.log(this.state.tasks)
+    
+   if (!this.state.draft) return (
+    alert('Please insert a task!') ) 
+  
+
+    console.log(!this.state.draft)
   
     //const {tasks, draft} = this.state
     //const list = tasks
@@ -27,6 +32,12 @@ class App extends Component {
     this.setState({filteredTasks: this.state.tasks})
     //console.log(this.state.draft)
   }
+/*
+  delTodo = () => {
+    //tasks.splice(1)
+    console.log(this.state.tasks.indexOf())
+  }
+  */  
   
   filterTasks(e) {
     const text = e.currentTarget.value;
@@ -62,19 +73,39 @@ class App extends Component {
     
 }
 
-const TaskList = ({ tasks }) => {
-  if (tasks.length > 0) {
+class TaskList extends Component {
+state = {
+  tasks: this.props.tasks
+}
+
+  delTodo = (i) => {
+  this.props.tasks.splice(i, 1)
+  console.log(i)
+  console.log(this.props.tasks)
+  this.setState({
+    tasks: this.state.tasks
+  })
+  }
+
+  render() {
+    console.log(this.props.tasks)
+  if (this.props.tasks.length > 0) {
     return (
-      <p>
-        {tasks.map(task=> <div>{task}</div>)}
-      </p>
+      <div className="Task">
+        {this.props.tasks.map((task,i)=> 
+        <div key={i}>{task}<button onClick=
+        {() => this.delTodo(i)}>
+          remove</button></div>)}
+      </div>
     );
   }
 
   return (
     <p>No results!</p>
   );
-};
+
+  }
+}
   
 
 export default App;
