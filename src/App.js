@@ -39,6 +39,15 @@ class App extends Component {
   }
   */  
   
+ delTodo = (i) => {
+  this.props.tasks.splice(i, 1)
+  console.log(i)
+  console.log(this.props.tasks)
+  this.setState({
+    tasks: this.state.tasks
+  })
+  }
+
   filterTasks(e) {
     const text = e.currentTarget.value;
     console.log(text)
@@ -64,48 +73,21 @@ class App extends Component {
        <input type="text" onChange={this.Update} value={this.draft} placeholder='Task name'></input>
        <input type="text" onInput={this.filterTasks.bind(this)} placeholder='Search tasks'></input>
        <button onClick={this.AddTodo}>Add</button>
-       <TaskList tasks={this.state.filteredTasks} />
-      </header>
+        <div className="Task">
+        {this.state.filteredTasks.length > 0 ? 
+        this.state.filteredTasks.map((task,i)=> 
+        <div key={i}>{task}<button onClick=
+        {() => this.delTodo(i)}>
+          remove</button></div>)
+          : 'No results!'}
+      </div>
+          
+       </header>
     </div>
   );
 
   }
     
 }
-
-class TaskList extends Component {
-state = {
-  tasks: this.props.tasks
-}
-
-  delTodo = (i) => {
-  this.props.tasks.splice(i, 1)
-  console.log(i)
-  console.log(this.props.tasks)
-  this.setState({
-    tasks: this.state.tasks
-  })
-  }
-
-  render() {
-    console.log(this.props.tasks)
-  if (this.props.tasks.length > 0) {
-    return (
-      <div className="Task">
-        {this.props.tasks.map((task,i)=> 
-        <div key={i}>{task}<button onClick=
-        {() => this.delTodo(i)}>
-          remove</button></div>)}
-      </div>
-    );
-  }
-
-  return (
-    <p>No results!</p>
-  );
-
-  }
-}
-  
 
 export default App;
